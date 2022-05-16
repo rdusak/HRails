@@ -6,7 +6,7 @@ Minor stylistic changes have been made.
 
 ## Usage
 ```console
-bundle
-rake db:migrate # if no database present
-rails s
+$ bundle
+$ rake db:migrate # if no database present
+$ rails s
 ```
