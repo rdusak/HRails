@@ -1,7 +1,29 @@
 require 'rails_helper'
 
-RSpec.describe "Registrations", type: :request do
-  describe "GET /index" do
-    pending "add some examples (or delete) #{__FILE__}"
+RSpec.configure do |config|
+  config.include Devise::Test::ControllerHelpers, type: :controller
+end
+
+RSpec.describe "Registrations", type: :controller do
+  describe "new user registration" do
+    before :each do
+      request.env['devise.mapping'] = Devise.mappings[:user]
+      @controller = RegistrationsController.new
+    end
+    valid_attributes = {fistname: 'user',
+                        lastname: 'user',
+                        email: 'user@user.com',
+                        username: 'user',
+                        password: 'useruser',
+                        password_confirmation: 'useruser'
+                       }
+    
+    context "with valid params" do
+      it "creates a new User" do
+        expect {
+          post :create, params: { user: valid_attributes} 
+        }.to change(User, :count).by(1)
+      end      
+    end
   end
 end
