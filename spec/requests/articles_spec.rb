@@ -21,3 +21,22 @@ RSpec.describe "Articles", type: :controller do
     end
   end
 end
+
+RSpec.describe 'ArticlesController', type: :controller do
+  
+  describe "GET index" do
+    it "has a 302 status code" do
+      @controller = ArticlesController.new
+      get :index
+      expect(response.status).to eq(302)
+    end
+  end
+
+  describe "GET new" do
+    it "has a 302 status code" do
+      @controller = ArticlesController.new
+      get :new
+      expect(response.status).to eq(302)
+    end
+  end
+end
