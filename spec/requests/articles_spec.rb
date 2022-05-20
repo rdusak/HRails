@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Articles", type: :request do
+RSpec.describe "Articles", type: :controller do
 
   describe 'create' do
     it 'successfully creates a new article' do
