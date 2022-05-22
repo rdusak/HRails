@@ -7,6 +7,7 @@ RSpec.describe "Articles", type: :controller do
   describe 'create' do
     it 'successfully creates a new article' do
       usr = create(:user)
+      sign_in usr
       article = create(:article, user_id: usr.id, body: 'test test test')
       expect(Article.last.body).to eq('test test test')
     end
@@ -29,5 +30,20 @@ RSpec.describe 'ArticlesController', type: :controller do
       get :new
       expect(response.status).to eq(302)
     end
+  end
+
+  include FactoryBot::Syntax::Methods
+  describe "with valid params" do
+    it "creates a new article" do
+      @controller = ArticlesController.new
+      usr = create(:user)
+      sign_in usr
+      expect {
+        # either this
+        #art = create(:article, user_id: usr.id)
+        # or this
+        post :create, params: { article: {title: Faker::Book.title, body: Faker::Lorem.paragraph} }
+      }.to change(Article, :count).by(1)
+    end      
   end
 end
