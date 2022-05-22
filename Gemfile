@@ -76,6 +76,19 @@ group :test do
   gem 'webdrivers'
 end
 
+group :development, :test do
+
+  # Rails integration for factory_bot, a replacement for fixtures
+
+  gem 'factory_bot_rails'
+
+
+  # For auto-generating demo data
+
+  gem 'faker'
+
+end
+
 gem 'nokogiri'
 
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'

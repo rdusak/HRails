@@ -1,23 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "Articles", type: :controller do
-
+  # `include` done here in order to avoid 
+  # namespace collision with RegistrationController
+  include FactoryBot::Syntax::Methods
   describe 'create' do
     it 'successfully creates a new article' do
-
-      usr = User.create(username: 'testuser',
-                        email: 'test@test.com',
-                        firstname: 'testuser',
-                        lastname: 'testuser', 
-                        password: 'password',
-                        password_confirmation: 'password')
-
-      article = Article.create(title: 'testarticle',
-                               body: 'test test test',
-                               user_id: usr.id)
-      
+      usr = create(:user)
+      article = create(:article, user_id: usr.id, body: 'test test test')
       expect(Article.last.body).to eq('test test test')
-      
     end
   end
 end
