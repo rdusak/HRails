@@ -48,4 +48,19 @@ RSpec.describe 'ArticlesController', type: :controller do
       end.to change(Article, :count).by(1)
     end
   end
+
+  describe 'with invalid params' do
+    it 'fails to create a new article' do
+      @controller = ArticlesController.new
+      usr = create(:user)
+      sign_in usr
+      expect do
+        # either this
+        # art = create(:article, user_id: -1, title: '', body: '')
+        # or this
+        post :create,
+             params: { article: { title: '', body: '' } }
+      end.to change(Article, :count).by(0)
+    end
+  end
 end
