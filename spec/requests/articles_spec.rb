@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Articles", type: :controller do
-  # `include` done here in order to avoid 
+RSpec.describe 'Articles', type: :controller do
+  # `include` done here in order to avoid
   # namespace collision with RegistrationController
   include FactoryBot::Syntax::Methods
   describe 'create' do
@@ -15,17 +17,16 @@ RSpec.describe "Articles", type: :controller do
 end
 
 RSpec.describe 'ArticlesController', type: :controller do
-  
-  describe "GET index" do
-    it "has a 302 status code" do
+  describe 'GET index' do
+    it 'has a 302 status code' do
       @controller = ArticlesController.new
       get :index
       expect(response.status).to eq(302)
     end
   end
 
-  describe "GET new" do
-    it "has a 302 status code" do
+  describe 'GET new' do
+    it 'has a 302 status code' do
       @controller = ArticlesController.new
       get :new
       expect(response.status).to eq(302)
@@ -33,17 +34,18 @@ RSpec.describe 'ArticlesController', type: :controller do
   end
 
   include FactoryBot::Syntax::Methods
-  describe "with valid params" do
-    it "creates a new article" do
+  describe 'with valid params' do
+    it 'creates a new article' do
       @controller = ArticlesController.new
       usr = create(:user)
       sign_in usr
-      expect {
+      expect do
         # either this
-        #art = create(:article, user_id: usr.id)
+        # art = create(:article, user_id: usr.id)
         # or this
-        post :create, params: { article: {title: Faker::Book.title, body: Faker::Lorem.paragraph} }
-      }.to change(Article, :count).by(1)
-    end      
+        post :create,
+             params: { article: { title: Faker::Book.title, body: Faker::Lorem.paragraph } }
+      end.to change(Article, :count).by(1)
+    end
   end
 end

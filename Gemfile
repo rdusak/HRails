@@ -55,7 +55,6 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
 
   gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
-  
 end
 
 group :development do
@@ -77,16 +76,13 @@ group :test do
 end
 
 group :development, :test do
-
   # Rails integration for factory_bot, a replacement for fixtures
 
   gem 'factory_bot_rails'
 
-
   # For auto-generating demo data
 
   gem 'faker'
-
 end
 
 gem 'nokogiri'

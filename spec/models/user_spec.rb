@@ -1,15 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  # `include` done here in order to avoid 
+  # `include` done here in order to avoid
   # namespace collision with RegistrationController
   include FactoryBot::Syntax::Methods
   describe 'creation' do
-    it 'can be created' do    
+    it 'can be created' do
       user = create(:user)
-      
-      expect(user).to be_valid
 
+      expect(user).to be_valid
     end
   end
 end
