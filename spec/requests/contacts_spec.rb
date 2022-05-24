@@ -8,7 +8,7 @@ RSpec.describe 'Contacts', type: :request do
   include FactoryBot::Syntax::Methods
   describe 'create' do
     it 'successfully creates a new contact' do
-      contact = create(:contact, name: 'testcontact')
+      create(:contact, name: 'testcontact')
 
       expect(Contact.last.name).to eq('testcontact')
     end

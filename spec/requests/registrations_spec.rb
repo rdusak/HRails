@@ -12,13 +12,14 @@ RSpec.describe 'Registrations', type: :controller do
       request.env['devise.mapping'] = Devise.mappings[:user]
       @controller = RegistrationsController.new
     end
-    valid_attributes = { fistname: 'user',
-                         lastname: 'user',
-                         email: 'user@user.com',
-                         username: 'user',
-                         password: 'useruser',
-                         password_confirmation: 'useruser' }
-
+    let(:valid_attributes) do
+      { fistname: 'user',
+        lastname: 'user',
+        email: 'user@user.com',
+        username: 'user',
+        password: 'useruser',
+        password_confirmation: 'useruser' }
+    end
     context 'with valid params' do
       it 'creates a new User' do
         expect do

@@ -6,20 +6,34 @@ RSpec.describe 'Articles', type: :controller do
   # `include` done here in order to avoid
   # namespace collision with RegistrationController
   include FactoryBot::Syntax::Methods
+
+  let(:usr) { create(:user) }
+
   describe 'create' do
     it 'successfully creates a new article' do
-      usr = create(:user)
       sign_in usr
-      article = create(:article, user_id: usr.id, body: 'test test test')
+      create(:article, user_id: usr.id, body: 'test test test')
       expect(Article.last.body).to eq('test test test')
     end
   end
 end
 
 RSpec.describe 'ArticlesController', type: :controller do
+  let(:usr) { create(:user) }
+  let(:valid_params) do
+    { article: { title: Faker::Book.title, body: Faker::Lorem.paragraph } }
+  end
+
+  let(:invalid_params) do
+    { article: { title: '', body: '' } }
+  end
+
+  before :each do
+    @controller = ArticlesController.new
+  end
+
   describe 'GET index' do
     it 'has a 302 status code' do
-      @controller = ArticlesController.new
       get :index
       expect(response.status).to eq(302)
     end
@@ -27,7 +41,6 @@ RSpec.describe 'ArticlesController', type: :controller do
 
   describe 'GET new' do
     it 'has a 302 status code' do
-      @controller = ArticlesController.new
       get :new
       expect(response.status).to eq(302)
     end
@@ -36,31 +49,27 @@ RSpec.describe 'ArticlesController', type: :controller do
   include FactoryBot::Syntax::Methods
   describe 'with valid params' do
     it 'creates a new article' do
-      @controller = ArticlesController.new
-      usr = create(:user)
       sign_in usr
       expect do
         # either this
         # art = create(:article, user_id: usr.id)
         # or this
         post :create,
-             params: { article: { title: Faker::Book.title, body: Faker::Lorem.paragraph } }
-      end.to change(Article, :count).by(1)
+             params: valid_params
+      end.to change { Article.count }
     end
   end
 
   describe 'with invalid params' do
     it 'fails to create a new article' do
-      @controller = ArticlesController.new
-      usr = create(:user)
       sign_in usr
       expect do
         # either this
         # art = create(:article, user_id: -1, title: '', body: '')
         # or this
         post :create,
-             params: { article: { title: '', body: '' } }
-      end.to change(Article, :count).by(0)
+             params: invalid_params
+      end.not_to change { Article.count }
     end
   end
 end
