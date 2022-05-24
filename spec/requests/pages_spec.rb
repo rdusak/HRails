@@ -23,9 +23,8 @@ RSpec.describe 'PagesRouting', type: :routing do
 end
 
 RSpec.describe 'PagesController', type: :controller do
-  
-  describe "GET index" do
-    it "has a 200 status code" do
+  describe 'GET index' do
+    it 'has a 200 status code' do
       @controller = PagesController.new
       get :index
       expect(response.status).to eq(200)

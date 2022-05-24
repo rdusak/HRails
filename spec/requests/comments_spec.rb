@@ -1,25 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Comments", type: :controller do
+RSpec.describe 'Comments', type: :controller do
+  # `include` done here in order to avoid
+  # namespace collision with RegistrationController
+  include FactoryBot::Syntax::Methods
 
-  before(:each) do
-    @usr = User.create(username: 'testuser',
-                        email: 'test@test.com',
-                        firstname: 'testuser',
-                        lastname: 'testuser', 
-                        password: 'password',
-                        password_confirmation: 'password')
-
-    @art = Article.create(title: 'testarticle',
-                           body: 'test test test',
-                           user_id: @usr.id)
-  end
+  let(:usr) { create(:user) }
+  let(:art) { create(:article, user_id: usr.id) }
 
   describe 'create' do
     it 'successfully creates a new comment' do
-      comment = Comment.create(article_id: @art.id,
-                               body: 'hello world',
-                               user_id: @usr.id)
+      create(:comment, user_id: usr.id, article_id: art.id, body: 'hello world')
       expect(Comment.last.body).to eq('hello world')
     end
   end
